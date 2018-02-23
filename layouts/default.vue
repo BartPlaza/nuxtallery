@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout_wrapper">
     <nuxt/>
   </div>
 </template>
@@ -13,6 +13,19 @@ html{
 body {
   margin: 0;
   padding:0;
+  min-height: 100vh;
+}
+
+#__nuxt{
+  min-height: 100vh;
+}
+
+#__layout{
+  min-height: 100vh;
+}
+
+.layout_wrapper{
+  min-height: 100vh;
 }
 
 </style>

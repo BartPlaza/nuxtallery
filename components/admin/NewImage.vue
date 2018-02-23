@@ -1,5 +1,5 @@
 <template>
-	<form class="add_image_form" @submit.prevent="saveImage">
+	<form class="form_wrapper" @submit.prevent="saveImage">
 		<div class="form_header">Add new image</div>
 		<div class="form_section">
 			<label for="title:">Title:</label>
@@ -41,69 +41,10 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
-.add_image_form{
+form {
 	width: 200px;
-	padding: 5px;
-	border: 1px solid #56a758;
 }
-
-.form_header{
-	text-align: center;
-	margin-bottom: 5px;
-}
-
-.form_section {
-	display: flex;
-	flex-direction: column;
-	padding: 10px;
-	font-size: 14px;
-}
-
-.form_section > input {
-	border: none;
-	border-bottom: 1px dashed grey;
-	margin-top: 5px;
-	font-size: 16px;
-	font-family: 'Quicksand', sans-serif;
-	font-weight: bold;
-	color: #56a758;
-}
-
-.form_section > input:focus{
-	outline:none;
-	border-bottom: 1px dashed #56a758;
-}
-
-.form_buttons {
-	padding: 10px;
-	display: flex;
-	justify-content: space-around;
-}
-
-.btn{
-	padding: 5px 10px 5px 10px;
-	border:none;
-}
-
-.btn:hover{
-	cursor:pointer;
-}
-
-.btn:focus{
-	outline:none;
-}
-
-.primary_btn{
-	background-color: #56a758;
-	color: white;	
-}
-
-.default_btn{
-	color: grey;
-	background-color: white;
-}
-
 
 </style>
