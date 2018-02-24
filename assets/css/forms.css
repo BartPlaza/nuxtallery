@@ -38,6 +38,14 @@
 	justify-content: space-around;
 }
 
+.form_error {
+	background-color: #F9A6A6;
+	border-radius: 5px;
+	padding: 10px;
+	color: #801919;
+	border: 1px solid #801919;
+}
+
 .btn{
 	padding: 5px 10px 5px 10px;
 	border:none;
@@ -55,6 +63,7 @@
 .primary_btn{
 	background-color: #56a758;
 	color: white;	
+	border: 1px solid #146614;
 }
 
 .default_btn{

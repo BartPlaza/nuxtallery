@@ -7,11 +7,10 @@
 
 <script>
 	import GaleryWrapper from '@/components/galery/GaleryWrapper.vue';
-	import Back from '@/components/header/Back.vue';
 	export default{
+		middleware: ['auth'],
 		components: {
-			'galery-wrapper': GaleryWrapper,
-			'back-button': Back
+			'galery-wrapper': GaleryWrapper
 		}
 	}
 </script>

@@ -29,13 +29,15 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    '@/assets/css/forms.css'
+    '~assets/css/forms.css',
+    '~assets/css/animations.css'
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~plugins/globalComponents.js'
   ],
 
   /*
@@ -54,5 +56,14 @@ module.exports = {
     extend(config, ctx) {
       
     }
+  },
+
+  env: {
+    firebaseAPIKey: 'AIzaSyBe1vcGaSuudKxkwIlqBUsMAFbgawRkICA'
+  },
+
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
   }
 }

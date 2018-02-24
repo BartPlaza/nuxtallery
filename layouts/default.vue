@@ -4,6 +4,21 @@
   </div>
 </template>
 
+<script>
+  export default{
+    mounted: function(){
+      let user;
+      if(user = localStorage.getItem('authUser')){
+        user = JSON.parse(user);
+        if(user.expiresIn > Date.now()){
+          this.$store.commit('logInUser', user);
+          this.$store.dispatch('logOutTimer', user.expiresIn - Date.now());
+        }
+      } 
+    }
+  }
+</script>
+
 <style>
 
 html{

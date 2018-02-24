@@ -4,11 +4,15 @@ import axios from 'axios';
 const createStore = function(){
 	return new Vuex.Store({
 		state:{
+			user: null,
 			images: []
 		},
 		getters:{
+			isAuthenticated: function(state){
+				return state.user != null;
+			},
 			loadedImages: function(state){
-				return state.images
+				return state.images;
 			},
 			showImage: function(state){
 				return function(id){
@@ -19,6 +23,12 @@ const createStore = function(){
 			}
 		},
 		mutations:{
+			logInUser: function(state, user){
+				state.user = user;
+			},
+			logOutUser: function(state){
+				state.user = null;
+			},
 			setImages: function(state, images){
 				state.images = images
 			},
@@ -47,23 +57,29 @@ const createStore = function(){
 					context.error(error);
 				});
 			},
-			saveImage(context, image){
-				axios.post('https://nuxtallery.firebaseio.com/images.json', image)
+			logOutTimer(VuexContext, time){
+				setTimeout(function(){
+					VuexContext.commit('logOutUser');
+					localStorage.removeItem('authUser');
+				},time);
+			},
+			saveImage(VuexContext, image){
+				axios.post('https://nuxtallery.firebaseio.com/images.json?auth='+VuexContext.state.user.idToken, image)
 				.then(function(response){
 					const fullImage = {...image, id: response.data.name};
-					context.commit('saveImage', fullImage);
+					VuexContext.commit('saveImage', fullImage);
 				})
 				.catch(function(error){
-					context.error(error);
+					console.log(error.response);
 				});
 			},
-			deleteImage(context, id){
-				axios.delete('https://nuxtallery.firebaseio.com/images/'+id+'.json')
+			deleteImage(VuexContext, id){
+				axios.delete('https://nuxtallery.firebaseio.com/images/'+id+'.json?auth='+VuexContext.state.user.idToken)
 				.then(function(response){
-					context.commit('deleteImage', id);
+					VuexContext.commit('deleteImage', id);
 				})
 				.catch(function(error){
-					context.error(error);
+					console.log(error.response);
 				});
 			}
 		}

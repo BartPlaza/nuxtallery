@@ -1,12 +1,12 @@
 <template>
 	<div class="back_button">
-		<nuxt-link :to="link"><i class="fas fa-undo-alt"></i> Back</nuxt-link>
+		<nuxt-link :to="link" :style="{color: color}"><i class="fas fa-undo-alt"></i> Back</nuxt-link>
 	</div>
 </template>
 
 <script>
 export default {
-	props: ['link']
+	props: ['link', 'color']
 }
 </script>
 
@@ -22,5 +22,15 @@ export default {
 	.back_button > * {
 		color: white;
 		text-decoration: none;
+	}
+
+	.back_button i {
+		transform: rotateZ(0deg);
+		transition: all 0.5s;
+	}
+
+	.back_button:hover i {
+		transform: rotateZ(-65deg);
+		transition: all 0.5s;
 	}
 </style>

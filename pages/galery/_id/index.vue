@@ -8,11 +8,8 @@
 
 <script>
 
-import Back from '@/components/header/Back.vue';
 export default {
-	components: {
-		'back-button': Back
-	},
+	middleware: ['auth'],
 	computed: {
 		image: function(){
 			return this.$store.getters.showImage(this.$route.params.id)

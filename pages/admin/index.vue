@@ -3,6 +3,7 @@
 		<h1>Admin page</h1>
 		<new-image></new-image>
 		<all-images></all-images>
+		<back-button link="/" color="black"></back-button>
 	</div>
 </template>
 
@@ -11,6 +12,7 @@ import NewImage from '@/components/admin/NewImage.vue'
 import AllImages from '@/components/admin/AllImages.vue'
 import axios from 'axios';
 export default {
+	middleware: ['auth'],
 	components: {
 		'new-image': NewImage,
 		'all-images': AllImages
