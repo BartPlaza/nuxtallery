@@ -1,6 +1,6 @@
 <template>
 	<div class="image_wrapper">
-		<div class="image" :style="{backgroundImage: 'url('+image.url+')'}"></div>
+		<nuxt-link to="/galery/private" class="image" :style="{backgroundImage: 'url('+image.url+')'}"></nuxt-link>
 		<back-button link="/galery/private"></back-button>
 	</div>
 
@@ -31,6 +31,7 @@ export default {
 	width: 100vw;
 	height: 100vh;
 	background-size: cover;
+	cursor: zoom-out;
 }
 
 </style>

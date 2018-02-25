@@ -16,7 +16,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import '~assets/css/variables.scss';
+
   .container {
     height: 100vh;
     width: 100%;
@@ -41,6 +44,10 @@ export default {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
+
+      @media #{$sm} {
+          font-size: 18vw;
+      }
   }
 
   .hero > h1 > sup {

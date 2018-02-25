@@ -1,6 +1,5 @@
 <template>
 	<div class="admin_workspace">
-		<h1>Admin page</h1>
 		<new-image></new-image>
 		<all-images></all-images>
 		<back-button link="/" color="black"></back-button>
@@ -20,14 +19,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import '~assets/css/variables.scss';
 
 .admin_workspace{
 	display: flex;
 	justify-content: space-around;
-	align-items: center;
-	padding: 20px;
-	flex-direction: column;
+	align-items: flex-start;
+	padding: 50px;
+	flex-direction: row;
+	
+	@media #{$sm} {
+		flex-direction: column;
+		align-items: center;
+	}
 }
 
 </style>

@@ -7,8 +7,10 @@
 
 .form_header{
 	text-align: center;
-	margin-bottom: 5px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
 	font-size: 22px;
+	border-bottom: 1px solid #56a758;
 }
 
 .form_section {

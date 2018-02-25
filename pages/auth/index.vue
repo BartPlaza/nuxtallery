@@ -1,7 +1,7 @@
 <template>
 	<div class="full_centered">
 		<form class="form_wrapper" @submit.prevent="callRequest">
-			<div class="form_header">{{signIn ? 'Sign In' : 'Sign Up'}}</div>
+			<div class="form_header">{{signIn ? 'Login' : 'Create account'}}</div>
 			<div class="form_section">
 				<label for="email:">Email:</label>
 				<input type="email" id="email" required v-model="credentials.email">
@@ -18,7 +18,7 @@
 			-->
 			<div class="form_buttons">
 				<button @click.prevent="signIn = !signIn" class="default_btn btn"> {{signIn ? 'Want to Register?' : 'Want to login?'}}</button>
-				<button class="primary_btn btn" type="submit">{{signIn ? 'Sign In' : 'Sign Up'}}</button>
+				<button class="primary_btn btn" type="submit">{{signIn ? 'Login' : 'Register'}}</button>
 			</div>
 			<div class="form_section" v-show="errors.show">
 				<div class="form_error">

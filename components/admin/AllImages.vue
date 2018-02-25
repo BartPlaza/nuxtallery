@@ -1,6 +1,6 @@
 <template>
 	<div class="images_wrapper">
-		<div class="images" v-for="image in images" :style="{backgroundImage:'url('+image.url+')'}">
+		<div class="image" v-for="image in images" :style="{backgroundImage:'url('+image.url+')'}">
 			<a href="#" @click="deleteImage(image.id)"><i class="fas fa-trash-alt"></i></a>
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 	grid-gap: 10px;
 }
 
-.images {
+.image {
 	background-color: black;
 	background-size: cover;
 	display: flex;
@@ -41,12 +41,12 @@
 	align-items: flex-start;
 }
 
-.images:hover > a {
+.image:hover > a {
 	display:block;
 	cursor: pointer;
 }
 
-.images > a {
+.image > a {
 	display: none;
 	background-color: rgba(0,0,0,0.5);
 	color: white;

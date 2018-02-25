@@ -54,7 +54,9 @@
 	}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import '~assets/css/variables.scss';
 
 .wrapper {
 	padding: 1em;
@@ -64,5 +66,11 @@
 	grid-auto-rows: 30vh;
 	background-color: rgba(0,0,0,0.9);
 	min-height: 100vh;
+
+	@media #{$sm} {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
+
+
 </style>

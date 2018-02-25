@@ -30,7 +30,8 @@ module.exports = {
   */
   css: [
     '~assets/css/forms.css',
-    '~assets/css/animations.css'
+    '~assets/css/animations.css',
+    '~assets/css/variables.scss'
   ],
 
   /*

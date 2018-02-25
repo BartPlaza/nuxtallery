@@ -15,8 +15,9 @@ export default {
 		position: fixed;
 		bottom: 0;
 		right: 0;
-		padding: 20px;
+		padding: 15px 20px 15px 20px;
 		font-size: 22px;
+		z-index: 1000;
 	}
 
 	.back_button > * {

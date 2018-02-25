@@ -1,6 +1,5 @@
 <template>
 	<nuxt-link :to="'/galery/'+(private ? 'private/' : 'public/')+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
-		
 	</nuxt-link>
 </template>
 
@@ -23,17 +22,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import '~assets/css/variables.scss';
 
 .image {
 	background-color: grey;
 	background-size: cover;
 	filter:  contrast(90%) grayscale(20%);
 	border: 1px solid black;
+	@media #{$sm} {
+		grid-column: 1 / span 2;
+	}
 }
 
 .image:hover{
-	cursor:pointer;
+	cursor:zoom-in;
 	filter:  contrast(100%) grayscale(0%);
 	border: 1px solid #3ca55c;
 
@@ -41,13 +45,22 @@ export default {
 
 .image.twoS{
 	grid-column: 1 / span 2;
+	@media #{$sm} {
+		grid-column: 1 / span 2;
+	}
 }
 
 .image.twoM{
 	grid-column: 2 /span 2;
+	@media #{$sm} {
+		grid-column: 1 / span 2;
+	}
 }
 
 .image.twoE{
 	grid-column: 3 / span 2;
+	@media #{$sm} {
+		grid-column: 1 / span 2;
+	}
 }
 </style>
