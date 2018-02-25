@@ -10,7 +10,7 @@
 	export default {
 		computed: {
 			images: function(){
-				return this.$store.getters.loadedImages;
+				return this.$store.getters.privateImages;
 			}
 		},
 		methods: {

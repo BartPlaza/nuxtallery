@@ -1,6 +1,6 @@
 <template>
 		<section class="galery">
-			<galery-wrapper></galery-wrapper>
+			<galery-wrapper :images="images" :private="true"></galery-wrapper>
 			<back-button link="/"></back-button>
 		</section>
 </template>
@@ -11,6 +11,11 @@
 		middleware: ['auth'],
 		components: {
 			'galery-wrapper': GaleryWrapper
+		},
+		computed: {
+			images: function(){
+				return this.$store.getters.privateImages;
+			}
 		}
 	}
 </script>

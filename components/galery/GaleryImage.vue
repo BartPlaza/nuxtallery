@@ -1,5 +1,5 @@
 <template>
-	<nuxt-link :to="'/galery/'+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
+	<nuxt-link :to="'/galery/'+(private ? 'private/' : 'public/')+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
 		
 	</nuxt-link>
 </template>
@@ -13,6 +13,10 @@ export default {
 		},
 		info: {
 			type: String,
+			required: true
+		},
+		private: {
+			type: Boolean,
 			required: true
 		}
 	}

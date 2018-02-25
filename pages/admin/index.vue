@@ -16,20 +16,6 @@ export default {
 	components: {
 		'new-image': NewImage,
 		'all-images': AllImages
-	},
-	mounted: function(){
-		const el = this;
-		this.$on('itemDeleted', function(id){
-		console.log('deleted');	
-			el.images.forEach(function(item,index){
-				console.log('deleted');
-				if(el.images[index].id == id){
-					el.images.splice(index,1);
-
-					return;
-				}
-			});
-		})
 	}
 }
 </script>
@@ -37,7 +23,6 @@ export default {
 <style scoped>
 
 .admin_workspace{
-	
 	display: flex;
 	justify-content: space-around;
 	align-items: center;

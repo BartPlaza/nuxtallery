@@ -75,6 +75,7 @@ export default{
 					el.$store.commit('logInUser', response.data);
 					localStorage.setItem('authUser', JSON.stringify(response.data));
 					el.$store.dispatch('logOutTimer', response.data.expiresIn - Date.now());
+					el.$store.dispatch('setPrivateImages', response.data.localId);
 				})
 				.then(function(){
 					el.$router.push('/admin');

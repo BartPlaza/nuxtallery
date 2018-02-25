@@ -32,6 +32,19 @@
 	border-bottom: 1px dashed #56a758;
 }
 
+.form_section.section_inline{
+	flex-direction: row;
+	align-items: flex-end;
+	
+}
+
+.form_checkbox {
+	margin: 0;
+	margin-left: 4px;
+	color: green;
+	border: 1px solid green;
+}
+
 .form_buttons {
 	padding: 10px;
 	display: flex;

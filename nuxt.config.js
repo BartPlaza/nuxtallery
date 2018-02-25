@@ -65,5 +65,14 @@ module.exports = {
   transition: {
     name: 'fade',
     mode: 'out-in'
+  },
+
+  router: {
+    extendRoutes(routes, resolve){
+      routes.push({
+        path: '/galery',
+        component: resolve(__dirname, 'pages/galery/public/index.vue')
+      })
+    }
   }
 }

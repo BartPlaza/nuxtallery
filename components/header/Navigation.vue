@@ -2,7 +2,15 @@
 	<nav class="navigation">
 		<nuxt-link class="navigation_link" to="/">Home</nuxt-link>
 		<nuxt-link class="navigation_link" to="/admin">Admin</nuxt-link>
-		<nuxt-link class="navigation_link" to="/galery">Galery</nuxt-link>
+		<span class="with_subnav">
+			<nuxt-link class="navigation_link" to="/galery/public">Galery
+				<i class="fas fa-sort-down" v-show="loggedIn"></i>
+			</nuxt-link>
+			<div class="sub_navigation" v-show="loggedIn">
+				<nuxt-link class="sub_navigation_link" to="/galery/public">Public</nuxt-link>
+				<nuxt-link class="sub_navigation_link" to="/galery/private">My gallery</nuxt-link>
+			</div>
+		</span>
 		<nuxt-link class="navigation_link" to="/about">About</nuxt-link>
 		<span class="with_subnav">
 			<nuxt-link class="navigation_link" to="/auth">
@@ -76,8 +84,9 @@
 	}
 	.sub_navigation_link{
 		text-decoration: none;
-		font-size: 16px;
+		font-size: 18px;
 		color: black;
+		padding-bottom: 5px;
 	}
 
 	.sub_navigation_link:hover {

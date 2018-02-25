@@ -13,6 +13,7 @@
         if(user.expiresIn > Date.now()){
           this.$store.commit('logInUser', user);
           this.$store.dispatch('logOutTimer', user.expiresIn - Date.now());
+          this.$store.dispatch('setPrivateImages', user.localId);
         }
       } 
     }

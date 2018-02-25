@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="wrapper">
-			<galery-image v-for="(image,index) in images" :key="image.id" :image="image" :info="classes[index]" ></galery-image>
+			<galery-image v-for="(image,index) in images" :key="image.id" :image="image" :info="classes[index]" :private="private"></galery-image>
 		</div>
 	</div>
 </template>
@@ -12,14 +12,19 @@
 		components: {
 			'galery-image': GaleryImage
 		},
+		props: {
+			images: {
+				type: Array,
+				required: true
+			},
+			private: {
+				type: Boolean,
+				required: true
+			}
+		},
 		data: function(){
 			return {
 				classes: []
-			}
-		},
-		computed: {
-			images: function(){
-				return this.$store.getters.loadedImages;
 			}
 		},
 		created: function(){
