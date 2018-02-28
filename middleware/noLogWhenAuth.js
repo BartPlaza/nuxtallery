@@ -1,7 +1,9 @@
+import firebase from 'firebase';
+
 export default function(context){
-	if(context.store.getters.isAuthenticated){
-		if(context.route.path == '/auth'){
+	firebase.auth().onAuthStateChanged(function(user){
+		if(user){
 			context.redirect('/');
 		}
-	}
+	})
 }

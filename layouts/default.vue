@@ -7,6 +7,7 @@
 <script>
   export default{
     mounted: function(){
+      
       let user;
       if(user = localStorage.getItem('authUser')){
         user = JSON.parse(user);

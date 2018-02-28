@@ -38,7 +38,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~plugins/globalComponents.js'
+    '~plugins/globalComponents.js',
+    '~plugins/firebase.js'
   ],
 
   /*

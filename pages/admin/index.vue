@@ -9,7 +9,6 @@
 <script>
 import NewImage from '@/components/admin/NewImage.vue'
 import AllImages from '@/components/admin/AllImages.vue'
-import axios from 'axios';
 export default {
 	middleware: ['auth'],
 	components: {

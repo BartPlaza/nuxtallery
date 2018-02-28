@@ -14,8 +14,8 @@
 			<input class="form_checkbox" type="checkbox" id="private" v-model="newImage.private">
 		</div>
 		<div class="form_buttons">
-			<button class="default_btn btn" type="reset">Reset</button>
-			<button class="primary_btn btn" type="submit">Submit</button>
+			<button class="default_btn btn" type="reset" tabindex='2'>Reset</button>
+			<button class="primary_btn btn" type="submit" tabindex='1'>Submit</button>
 		</div>
 	</form>
 </template>

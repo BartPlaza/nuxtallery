@@ -45,9 +45,8 @@
 		},
 		methods: {
 			logOut: function(){
-				this.$store.commit('logOutUser');
-				localStorage.removeItem('authUser');
-			},
+				this.$store.dispatch('logoutUser');
+			}
 		}
 	}
 </script>

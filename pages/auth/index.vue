@@ -32,13 +32,16 @@
 
 <script>
 import axios from 'axios';
+import firebase from 'firebase';
 
 export default{
-	middleware: ['noLogWhenAuth'],
-	mounted: function(){
-		if(localStorage.getItem('authUser')){
-			this.$router.push('/admin')
-		}
+	created: function(){
+		let el = this;
+		firebase.auth().onAuthStateChanged(function(user){
+			if(user){
+				el.$router.push('/admin');
+			}
+		})
 	},
 	data: function(){
 		return {
@@ -46,44 +49,23 @@ export default{
 			credentials: {
 				email: '',
 				password: '',
-			},
-			errors: {
-				show: false,
-				message: ''
 			}
+		}
+	},
+	computed: {
+		errors: function(){
+			return this.$store.getters.getFormErrors;
 		}
 	},
 	methods: {
 		callRequest: function(){
 			this.errors.show = false;
-			let el = this;
-			let actionURL ='https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + process.env.firebaseAPIKey;
-			if(!this.signIn){
-				actionURL ='https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + process.env.firebaseAPIKey;
+			if(this.signIn){
+				this.$store.dispatch('loginUser', this.credentials);
+			} else {
+				this.$store.dispatch('registerUser', this.credentials);
 			}
-			console.log(actionURL);
-			axios.post(actionURL, {
-					email: this.credentials.email,
-					password: this.credentials.password,
-					returnSecureToken: true
-				})
-				.then(function(response){
-					//Convert expires in to expireas at
-					let validTime = response.data.expiresIn * 1000 + Date.now();
-					response.data.expiresIn = validTime;
-
-					el.$store.commit('logInUser', response.data);
-					localStorage.setItem('authUser', JSON.stringify(response.data));
-					el.$store.dispatch('logOutTimer', response.data.expiresIn - Date.now());
-					el.$store.dispatch('setPrivateImages', response.data.localId);
-				})
-				.then(function(){
-					el.$router.push('/admin');
-				})
-				.catch(function(error){
-					el.errors.show = true;
-					el.errors.message = error.response.data.error.message;
-				});
+			//el.$store.dispatch('setPrivateImages', response.data.localId);	
 		}
 	}
 }

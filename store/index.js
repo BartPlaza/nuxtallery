@@ -1,12 +1,17 @@
 import Vuex from 'vuex';
 import axios from 'axios';
+import firebase from 'firebase';
 
 const createStore = function(){
 	return new Vuex.Store({
 		state:{
 			user: null,
-			publicImages: [],
-			privateImages: []
+			publicImages: '',
+			privateImages: [],
+			formErrors: {
+				show: false,
+				message: ''
+			}
 		},
 		getters:{
 			isAuthenticated: function(state){
@@ -14,7 +19,7 @@ const createStore = function(){
 			},
 			getUserId: function(state){
 				if(state.user != null){
-					return state.user.localId;
+					return state.user;
 				}
 			},
 			publicImages: function(state){
@@ -36,15 +41,27 @@ const createStore = function(){
 						return img.id == id;
 					})
 				}
+			},
+			getFormErrors: function(state){
+				return state.formErrors;
 			}
 		},
 		mutations:{
-			logInUser: function(state, user){
-				state.user = user;
+			setUser: function(state, user){
+				state.user = user.uid;
+				this.dispatch('setPrivateImages', user.uid);
 			},
-			logOutUser: function(state){
+			clearUser: function(state){
 				state.user = null;
 				state.privateImages = [];
+			},
+			setFormError: function(state, error){
+				state.formErrors.show = true;
+				state.formErrors.message = error;
+			},
+			clearFormError: function(state){
+				state.formErrors.show = false;
+				state.formErrors.message = '';
 			},
 			setPublicImages: function(state, images){
 				state.publicImages = images;
@@ -73,11 +90,13 @@ const createStore = function(){
 		},
 		actions:{
 			nuxtServerInit(VuexContext, context){
-				return axios.get('https://nuxtallery.firebaseio.com/images.json?orderBy="private"&equalTo=false')
+				return firebase.database().ref('images').once('value')
+				//return axios.get('https://nuxtallery.firebaseio.com/images.json?orderBy="private"&equalTo=false')
 				.then(function(response){
 					const images = [];
-					for(const key in response.data){
-						images.push({...response.data[key], id: key});
+					const data = response.val();
+					for(const key in data){
+						images.push({...data[key], id: key});
 					}
 					VuexContext.commit('setPublicImages', images);
 				})
@@ -85,12 +104,48 @@ const createStore = function(){
 					context.error(error);
 				});
 			},
+			loginUser(VuexContext, credentials){
+				const el = this;
+				firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
+				.then(function(response){
+					VuexContext.commit('setUser',response);
+					VuexContext.commit('clearFormError');
+					el.$router.push('/admin');
+				})
+				.catch(function(error){
+					VuexContext.commit('setFormError', error.message);
+				});
+			},
+			registerUser(VuexContext, credentials){
+				firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
+				.then(function(response){
+					VuexContext.commit('setUser',response);
+					VuexContext.commit('clearFormError');
+					el.$router.push('/admin');
+				})
+				.catch(function(error){
+					VuexContext.commit('setFormError', error.message);
+				});
+			},
+			logoutUser(VuexContext){
+				const el = this;
+				firebase.auth().signOut()
+				.then(function(response){
+					VuexContext.commit('clearUser');
+					el.$router.push('/');
+				})
+				.catch(function(error){
+					console.log(error);
+				});
+			},
 			setPrivateImages(VuexContext, userId){
-				axios.get('https://nuxtallery.firebaseio.com/images.json?orderBy="userId"&equalTo="'+userId+'"&auth='+VuexContext.state.user.idToken)
+				//axios.get('https://nuxtallery.firebaseio.com/images.json?orderBy="userId"&equalTo="'+userId+'"&auth='+VuexContext.state.user.idToken)
+				firebase.database().ref('images').orderByChild('userId').equalTo(userId).once('value')
 				.then(function(response){
 					const images = [];
-					for(const key in response.data){
-						images.push({...response.data[key], id: key});
+					const data = response.val();
+					for(const key in data){
+						images.push({...data[key], id: key});
 					}
 					VuexContext.commit('setPrivateImages', images);
 				})
@@ -98,16 +153,12 @@ const createStore = function(){
 					console.log(error.response);
 				});
 			},
-			logOutTimer(VuexContext, time){
-				setTimeout(function(){
-					VuexContext.commit('logOutUser');
-					localStorage.removeItem('authUser');
-				},time);
-			},
 			saveImage(VuexContext, image){
-				axios.post('https://nuxtallery.firebaseio.com/images.json?auth='+VuexContext.state.user.idToken, image)
+				//axios.post('https://nuxtallery.firebaseio.com/images.json?auth='+VuexContext.state.user.idToken, image)
+				firebase.database().ref('images').push(image)
 				.then(function(response){
-					const fullImage = {...image, id: response.data.name};
+					console.log(response);
+					const fullImage = {...image, id: response.key};
 					VuexContext.commit('saveImage', fullImage);
 				})
 				.catch(function(error){
@@ -115,7 +166,8 @@ const createStore = function(){
 				});
 			},
 			deleteImage(VuexContext, id){
-				axios.delete('https://nuxtallery.firebaseio.com/images/'+id+'.json?auth='+VuexContext.state.user.idToken)
+				//axios.delete('https://nuxtallery.firebaseio.com/images/'+id+'.json?auth='+VuexContext.state.user.idToken)
+				firebase.database().ref('images/'+id).remove()
 				.then(function(response){
 					VuexContext.commit('deleteImage', id);
 				})
