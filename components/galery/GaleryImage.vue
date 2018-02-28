@@ -1,5 +1,8 @@
 <template>
 	<nuxt-link :to="'/galery/'+(private ? 'private/' : 'public/')+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
+		<div class="description">
+			{{image.title}}
+		</div>
 	</nuxt-link>
 </template>
 
@@ -18,7 +21,7 @@ export default {
 			type: Boolean,
 			required: true
 		}
-	}
+	},
 }
 </script>
 
@@ -27,13 +30,22 @@ export default {
 @import '~assets/css/variables.scss';
 
 .image {
+	filter: blur(10px);
+	overflow: hidden;
 	background-color: grey;
 	background-size: cover;
 	filter:  contrast(90%) grayscale(20%);
 	border: 1px solid black;
-	@media #{$sm} {
-		grid-column: 1 / span 2;
-	}
+	text-decoration: none;
+	display: flex;
+	align-items: flex-end;
+
+
+
+		@media #{$sm} {
+			grid-column: 1 / span 2;
+		}
+
 }
 
 .image:hover{
@@ -62,5 +74,16 @@ export default {
 	@media #{$sm} {
 		grid-column: 1 / span 2;
 	}
+}
+
+.description{
+	white-space: normal;
+	background-color: rgba(0,0,0,0.7);
+	width: 100%;
+	color: white;
+	text-decoration: none;
+	padding: 5px;
+	font-size: 10px;
+
 }
 </style>

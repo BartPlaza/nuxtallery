@@ -7,6 +7,7 @@
 
 <script>
 	import GaleryWrapper from '@/components/galery/GaleryWrapper.vue';
+	
 	export default{
 		components: {
 			'galery-wrapper': GaleryWrapper

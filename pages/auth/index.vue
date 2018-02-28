@@ -4,11 +4,11 @@
 			<div class="form_header">{{signIn ? 'Login' : 'Create account'}}</div>
 			<div class="form_section">
 				<label for="email:">Email:</label>
-				<input type="email" id="email" required v-model="credentials.email">
+				<input type="email" id="email" required v-model="credentials.email" spellcheck="false" tabindex="1">
 			</div>
 			<div class="form_section">
 				<label for="password">Password:</label>
-				<input type="Password" id="password" required v-model="credentials.password">
+				<input type="Password" id="password" required v-model="credentials.password" tabindex="2">
 			</div>
 			<!--
 			<div class="form_section" v-if="!signIn">
@@ -17,8 +17,8 @@
 			</div>
 			-->
 			<div class="form_buttons">
-				<button @click.prevent="signIn = !signIn" class="default_btn btn"> {{signIn ? 'Want to Register?' : 'Want to login?'}}</button>
-				<button class="primary_btn btn" type="submit">{{signIn ? 'Login' : 'Register'}}</button>
+				<button @click.prevent="signIn = !signIn" class="default_btn btn" tabindex="4"> {{signIn ? 'Want to Register?' : 'Want to login?'}}</button>
+				<button class="primary_btn btn" type="submit" tabindex="3">{{signIn ? 'Login' : 'Register'}}</button>
 			</div>
 			<div class="form_section" v-show="errors.show">
 				<div class="form_error">

@@ -1,13 +1,19 @@
 <template>
 	<div>
 		<div class="wrapper">
-			<galery-image v-for="(image,index) in images" :key="image.id" :image="image" :info="classes[index]" :private="private"></galery-image>
+			<div class="search_bar">
+				<label for="search"> Search for</label>
+				<input type="text" id="search" class="search_input" autocomplete="false" v-model="search">
+				<i class="fas search_icon" :class="search == '' ? 'fa-search' : 'fa-times'" @click="search = ''"></i>
+			</div>
+			<galery-image v-for="(image,index) in filteredImages" :key="image.id" :image="image" :info="classes[index]" :private="private"></galery-image>
 		</div>
 	</div>
 </template>
 
 <script>
-	import GaleryImage from '@/components/galery/GaleryImage.vue'; 
+	import GaleryImage from '@/components/galery/GaleryImage.vue';
+
 	export default{
 		components: {
 			'galery-image': GaleryImage
@@ -24,7 +30,15 @@
 		},
 		data: function(){
 			return {
-				classes: []
+				classes: [],
+				search: ''
+			}
+		},
+		computed: {
+			filteredImages: function(){
+				return this.images.filter((image)=>{
+					return image.title.toLowerCase().match(this.search.toLowerCase());
+				})
 			}
 		},
 		created: function(){
@@ -60,6 +74,7 @@
 
 .wrapper {
 	padding: 1em;
+	padding-top: 4em;
 	display: grid;
 	grid-gap: 1em;
 	grid-template-columns: repeat(4, 1fr);
@@ -67,10 +82,47 @@
 	background-color: rgba(0,0,0,0.9);
 	min-height: 100vh;
 
+
 	@media #{$sm} {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
+
+.search_bar {
+		background-color: black;
+		padding: 10px;
+		color: white;
+		text-align: center;
+		position: fixed;
+		top: 0;
+		z-index: 1000;
+		width: 100vw;
+		font-size: 18px; 
+		box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.75);
+	}
+	.search_input {
+		background-color: black;
+		border: none;
+		border-bottom: 1px solid white;
+		font-size: 18px;
+    	font-family: Quicksand,sans-serif;
+    	color: white;
+    	margin-left: 5px;
+	}
+
+	.search_input:focus {
+		outline: none;
+	}
+
+	.search_icon {
+		width: 30px;
+	}
+
+	.search_icon.fa-times:hover
+	{
+		cursor: pointer;
+		color: #F9A6A6;
+	}
 
 
 </style>
