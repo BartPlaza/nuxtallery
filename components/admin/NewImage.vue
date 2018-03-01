@@ -27,7 +27,11 @@ export default {
 			newImage: {
 				title: '',
 				url: '',
-				private: false
+				private: false,
+				likes: {
+					count: 0,
+					users: []
+				}
 			}
 		}
 	},

@@ -1,6 +1,9 @@
 <template>
 	<div class="image_wrapper">
 		<nuxt-link to="/galery/public" class="image" :style="{backgroundImage: 'url('+image.url+')'}"></nuxt-link>
+		<div class="likes">
+			<button @click.prevent="addLike">Give like!</button>
+		</div>
 		<back-button link="/galery/public"></back-button>
 		<div class="description">
 			{{shortURL}}
@@ -18,6 +21,11 @@ export default {
 		shortURL: function(){
 			let splited =  this.image.url.split('/');
 			return splited[2];
+		}
+	}, 
+	methods: {
+		addLike: function(){
+			this.$store.dispatch('addLike', this.$route.params.id);
 		}
 	}	
 }
@@ -53,6 +61,12 @@ export default {
 	color: white;
 	font-size: 14px;
 	padding: 20px;
+}
+
+.likes {
+	position: fixed;
+	right:0px;
+	top: 0px;
 }
 
 </style>

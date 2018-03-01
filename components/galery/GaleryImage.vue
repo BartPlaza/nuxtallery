@@ -1,7 +1,8 @@
 <template>
 	<nuxt-link :to="'/galery/'+(private ? 'private/' : 'public/')+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
 		<div class="description">
-			{{image.title}}
+			<span>{{image.title}}</span>
+			<span><i class="fas fa-thumbs-up"></i> {{image.likes.count}}</span>
 		</div>
 	</nuxt-link>
 </template>
@@ -77,13 +78,15 @@ export default {
 }
 
 .description{
+	display: flex;
+	justify-content: space-between;
 	white-space: normal;
 	background-color: rgba(0,0,0,0.7);
 	width: 100%;
 	color: white;
 	text-decoration: none;
 	padding: 5px;
-	font-size: 10px;
+	font-size: 12px;
 
 }
 </style>

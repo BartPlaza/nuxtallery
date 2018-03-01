@@ -174,6 +174,22 @@ const createStore = function(){
 				.catch(function(error){
 					console.log(error.response);
 				});
+			},
+			addLike(VuexContext, imageId){
+				let reference = firebase.database().ref('images/'+imageId+'/likes/count');
+				reference.transaction(function(data){
+					return data + 1;
+				});
+				reference = firebase.database().ref('images/'+imageId+'/likes/users');
+				reference.transaction(function(data){
+					if(data === null){
+						return [VuexContext.state.user];
+					}else {
+						let newdata = data;
+						newdata.push(VuexContext.state.user);
+						return newdata;
+					}
+				});
 			}
 		}
 	});
