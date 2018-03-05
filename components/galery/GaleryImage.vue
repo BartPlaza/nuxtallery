@@ -2,7 +2,7 @@
 	<nuxt-link :to="'/galery/'+(private ? 'private/' : 'public/')+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
 		<div class="description">
 			<span>{{image.title}}</span>
-			<span><i class="fas fa-thumbs-up"></i> {{image.likes.count}}</span>
+			<span><i class="fas fa-thumbs-up"></i> {{image.getImageLikes}}</span>
 		</div>
 	</nuxt-link>
 </template>
@@ -23,6 +23,9 @@ export default {
 			required: true
 		}
 	},
+	computed: {
+		
+	}
 }
 </script>
 
