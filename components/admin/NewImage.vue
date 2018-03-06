@@ -28,10 +28,7 @@ export default {
 				title: '',
 				url: '',
 				private: false,
-				likes: {
-					count: 0,
-					users: []
-				}
+				likes: []
 			}
 		}
 	},
@@ -63,6 +60,8 @@ export default {
 
 form {
 	width: 200px;
+	margin-left: 25px;
+	margin-right: 25px;
 }
 
 </style>

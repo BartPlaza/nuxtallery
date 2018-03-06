@@ -33,7 +33,6 @@ const createStore = function(){
 			},
 			clearUser: function(state){
 				state.user = null;
-				state.privateImages = [];
 			},
 			setFormError: function(state, error){
 				state.formErrors.show = true;
@@ -72,6 +71,7 @@ const createStore = function(){
 				const el = this;
 				firebase.auth().signOut()
 				.then(function(response){
+					VuexContext.commit('clearPrivateImages');
 					VuexContext.commit('clearUser');
 					el.$router.push('/');
 				})

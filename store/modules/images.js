@@ -1,28 +1,32 @@
 import firebase from 'firebase';
 
 export default{
-	namespace: true,
 	state: {
-		publicImages: [],
-		privateImages: []
+		images: []
 	},
 	getters: {
 		publicImages: function(state){
-			return state.publicImages;
+			return state.images.filter(function(image){
+				return image.private == false; 
+			});
 		},
-		privateImages: function(state){
-			return state.privateImages;
-		},
-		showPublicImage: function(state){
-			return function(id){
-				return state.publicImages.find(function(img){
-					return img.id == id;
-				})
+		userPublicImages: function(state){
+			return function(userId){
+				return state.images.filter(function(image){
+					return ((image.userId == userId) && (image.private == false));
+				});
 			}
 		},
-		showPrivateImage: function(state){
+		userPrivateImages: function(state){
+			return function(userId){
+				return state.images.filter(function(image){
+					return ((image.userId == userId) && (image.private == true)); 
+				});
+			}
+		},
+		showImage: function(state){
 			return function(id){
-				return state.privateImages.find(function(img){
+				return state.images.find(function(img){
 					return img.id == id;
 				})
 			}
@@ -30,34 +34,37 @@ export default{
 	},
 	mutations: {
 		setPublicImages: function(state, images){
-			state.publicImages = images;
+			state.images = images;
 		},
 		setPrivateImages: function(state, images){
-			state.privateImages = images;
+			state.images = state.images.concat(images);
 		},
-		saveImage: function(state, image){
-			state.privateImages.push(image);
-			if(!image.private){
-				state.publicImages.push(image);
+		clearPrivateImages: function(state){
+			for (let i=state.images.length-1; i>=0; i--){
+				if(state.images[i].private == true){
+					state.images.splice(i, 1);
+				}
 			}
 		},
+		saveImage: function(state, image){
+			state.images.push(image);
+		},
 		deleteImage: function(state, id){
-			state.privateImages.forEach(function(item, index){
-				if(item.id == id){
-					state.privateImages.splice(index, 1);
-				}
+			let index = state.images.findIndex(function(image){
+				return image.id == imageId;
 			});
-			state.publicImages.forEach(function(item, index){
-				if(item.id == id){
-					state.publicImages.splice(index, 1);
-				}
+			state.images[index].splice(index, 1);
+		},
+		addLike: function(state, {imageId, userId}){
+			let index = state.images.findIndex(function(image){
+				return image.id == imageId;
 			});
+			state.images[index].likes.push(userId);
 		}
 	},
 	actions: {
 		nuxtServerInit(VuexContext, context){
-			return firebase.database().ref('images').once('value')
-			//return axios.get('https://nuxtallery.firebaseio.com/images.json?orderBy="private"&equalTo=false')
+			return firebase.database().ref('images').orderByChild('private').equalTo(false).once('value')
 			.then(function(response){
 				console.log(response.val());
 				const images = [];
@@ -76,16 +83,18 @@ export default{
 			});
 		},
 		setPrivateImages(VuexContext, userId){
-			//axios.get('https://nuxtallery.firebaseio.com/images.json?orderBy="userId"&equalTo="'+userId+'"&auth='+VuexContext.state.user.idToken)
 			firebase.database().ref('images').orderByChild('userId').equalTo(userId).once('value')
 			.then(function(response){
 				const images = [];
 				const data = response.val();
+
 				for(const key in data){
-					if(data[key].likes === undefined){
-						images.push({...data[key], id: key, likes: []});
-					} else {
-						images.push({...data[key], id: key});
+					if(data[key].private == true){
+						if(data[key].likes === undefined){
+							images.push({...data[key], id: key, likes: []});
+						} else {
+							images.push({...data[key], id: key});
+						}
 					}
 				}
 				VuexContext.commit('setPrivateImages', images);
@@ -118,16 +127,20 @@ export default{
 		},
 		addLike(VuexContext, imageId){
 			let reference = firebase.database().ref('images/'+imageId+'/likes');
-			console.log('images/'+imageId+'/likes');
 			reference.transaction(function(data){
-
-				if(data === undefined){
-					return [VuexContext.state.user];
+				if(data === null){
+					return [VuexContext.rootGetters.getUserId];
 				}else {
 					let newdata = data;
-					newdata.push(VuexContext.state.user);
+					newdata.push(VuexContext.rootGetters.getUserId);
 					return newdata;
 				}
+			})
+			.then(function(response){
+				VuexContext.commit('addLike', {imageId, userId: VuexContext.rootGetters.getUserId});
+			})
+			.catch(function(error){
+				console.log(error);
 			});
 		}
 	}

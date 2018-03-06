@@ -6,7 +6,7 @@
 				<input type="text" id="search" class="search_input" autocomplete="false" v-model="search">
 				<i class="fas search_icon" :class="search == '' ? 'fa-search' : 'fa-times'" @click="search = ''"></i>
 			</div>
-			<galery-image v-for="(image,index) in filteredImages" :key="image.id" :image="image" :info="classes[index]" :private="private"></galery-image>
+			<galery-image v-for="(image,index) in filteredImages" :key="image.id" :image="image" :info="classes[index]"></galery-image>
 		</div>
 	</div>
 </template>

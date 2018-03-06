@@ -16,10 +16,6 @@
 			images: function(){
 				return this.$store.getters.publicImages;
 			}
-		},
-		mounted: function(){
-			let aa = this.$store.getters.publicImages;
-			console.log();
 		}
 	}
 </script>

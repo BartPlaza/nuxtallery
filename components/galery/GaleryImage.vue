@@ -1,8 +1,8 @@
 <template>
-	<nuxt-link :to="'/galery/'+(private ? 'private/' : 'public/')+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
+	<nuxt-link :to="'/galery/'+(image.private ? 'private/' : 'public/')+image.id" class="image" :class="info" :style="{backgroundImage: 'url('+image.url+')'}">
 		<div class="description">
 			<span>{{image.title}}</span>
-			<span><i class="fas fa-thumbs-up"></i> {{image.getImageLikes}}</span>
+			<span><i class="fas fa-thumbs-up"></i> {{imageLikes}}</span>
 		</div>
 	</nuxt-link>
 </template>
@@ -17,14 +17,12 @@ export default {
 		info: {
 			type: String,
 			required: true
-		},
-		private: {
-			type: Boolean,
-			required: true
 		}
 	},
 	computed: {
-		
+		imageLikes: function(){
+			return this.image.likes.length;
+		}
 	}
 }
 </script>
