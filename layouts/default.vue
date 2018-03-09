@@ -21,7 +21,9 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+
+@import '~assets/css/variables.scss';
 
 html{
   font-family: 'Quicksand', sans-serif;

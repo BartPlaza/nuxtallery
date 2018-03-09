@@ -82,12 +82,13 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	white-space: normal;
-	background-color: rgba(0,0,0,0.7);
+	background-color: rgba(0,0,0,0.6);
 	width: 100%;
 	color: white;
 	text-decoration: none;
 	padding: 5px;
 	font-size: 12px;
+	margin-bottom: 5px;
 
 }
 </style>

@@ -20,6 +20,14 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
+
+@import '~assets/css/variables.scss';
+
+.galery {
+	@media #{$sm} {
+		margin-bottom: 50px;
+	}
+}
 
 </style>

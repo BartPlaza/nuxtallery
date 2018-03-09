@@ -108,6 +108,7 @@
     	font-family: Quicksand,sans-serif;
     	color: white;
     	margin-left: 5px;
+    	max-width: 50%;
 	}
 
 	.search_input:focus {

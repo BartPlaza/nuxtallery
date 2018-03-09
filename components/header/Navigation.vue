@@ -173,7 +173,7 @@
 	}
 	.sub_navigation_link{
 		text-decoration: none;
-		font-size: 18px;
+		font-size: 22px;
 		color: white;
 		padding-bottom: 5px;
 			@media #{$sm}{

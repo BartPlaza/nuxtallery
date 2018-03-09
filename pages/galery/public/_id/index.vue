@@ -1,21 +1,26 @@
 <template>
 	<div class="image_wrapper">
-		<nuxt-link to="/galery/public" class="image" :style="{backgroundImage: 'url('+image.url+')'}"></nuxt-link>
+		<div class="image">
+			<img class="image_prev":src="image.url">
+			<div class="description">
+				{{shortURL}}
+			</div>
+		</div>
 		<div class="image_ui" :class="{'not_auth': !isAuth}">
 			<div class="ui_section" v-show="!isAuth">
 				<button class="ui_button">
-					<nuxt-link to="/" class="ui_button_login"><i class="fas fa-sign-in-alt"></i></nuxt-link>
+					<nuxt-link to="/auth" class="ui_button_login"><i class="fas fa-sign-in-alt"></i></nuxt-link>
 				</button>
 				<div class="ui_description">Please, log in first</div>
 			</div>
 			<div class="ui_section">
-				<button class="ui_button" @click.prevent="addLike" :disabled="isLiked">
+				<button class="ui_button" @click.prevent="addLike" :disabled="(isLiked || !isAuth)">
 					<i class="far fa-thumbs-up" :class="{'is_liked': isLiked}"></i>
 				</button>
 				<div class="ui_description">{{isLiked ? 'You seemed to like' : 'Give like!'}}</div>
 			</div>
 			<div class="ui_section">
-				<button class="ui_button" @click.prevent="copyLink">
+				<button class="ui_button" @click.prevent="copyLink" :disabled="!isAuth">
 					<i class="fas fa-link"></i>
 				</button>
 				<div class="ui_description">Copy link</div>
@@ -23,9 +28,7 @@
 			</div>
 		</div>
 		<back-button link="/galery/public"></back-button>
-		<div class="description">
-			{{shortURL}}
-		</div>
+		
 	</div>
 
 </template>
@@ -60,15 +63,19 @@ export default {
 			}
 		},
 		copyLink: function(){
-			document.getElementById('image_link').select();
-			document.execCommand('Copy');
+			if(this.isAuth){
+				document.getElementById('image_link').select();
+				document.execCommand('Copy');
+			}
 		}
 	}	
 }
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+@import '~assets/css/variables.scss';
 
 #image_link{
 	position: absolute;
@@ -77,6 +84,7 @@ export default {
 
 .image_wrapper{
 	background-color: black;
+	min-width: 100vw;
 	min-height: 100vh;
 	display: flex;
 	justify-content: center;
@@ -84,24 +92,30 @@ export default {
 }
 
 .image {
-	width: 100vw;
-	height: 100vh;
-	background-size: cover;
-	cursor: zoom-out;
+	position: relative;
+	overflow: scroll;
+}
+
+.image_prev{
+	
 }
 
 .description {
-	position: fixed;
-	bottom: 0;
+	position: absolute;
+	bottom: 10px;
 	left: 0;
-	width: 100vw;
 	text-align: center;
 	z-index: 100;
 	background-color: black;
-	opacity: 0.7; 
+	opacity: 0.8; 
 	color: white;
 	font-size: 14px;
-	padding: 20px;
+	padding: 15px;
+	width: auto;
+
+	@media #{$sm} {
+		bottom: 60px;
+	}
 }
 
 .image_ui {
@@ -163,6 +177,10 @@ export default {
 	width: 100%;
 	height: 100%;
 	line-height: 45px;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
 }
 
 

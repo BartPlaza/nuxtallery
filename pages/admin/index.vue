@@ -32,6 +32,7 @@ export default {
 	@media #{$sm} {
 		flex-direction: column;
 		align-items: center;
+		margin-bottom: 50px;
 	}
 }
 

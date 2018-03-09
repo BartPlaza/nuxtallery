@@ -49,11 +49,11 @@ export default{
 		saveImage: function(state, image){
 			state.images.push(image);
 		},
-		deleteImage: function(state, id){
+		deleteImage: function(state, imageId){
 			let index = state.images.findIndex(function(image){
 				return image.id == imageId;
 			});
-			state.images[index].splice(index, 1);
+			state.images.splice(index, 1);
 		},
 		addLike: function(state, {imageId, userId}){
 			let index = state.images.findIndex(function(image){
@@ -116,7 +116,6 @@ export default{
 			});
 		},
 		deleteImage(VuexContext, id){
-			//axios.delete('https://nuxtallery.firebaseio.com/images/'+id+'.json?auth='+VuexContext.state.user.idToken)
 			firebase.database().ref('images/'+id).remove()
 			.then(function(response){
 				VuexContext.commit('deleteImage', id);
